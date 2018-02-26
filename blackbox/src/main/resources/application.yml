@@ -12,6 +12,3 @@ management:
 endpoints:
     health.mapping.DOWN: OK
     health.mapping.OUT_OF_SERVICE : OK
-
-git-hub_endpoints:
-  search-repo-by-owner: https://api.github.com/repos/{owner}/{repo}
