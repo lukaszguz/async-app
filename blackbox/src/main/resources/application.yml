@@ -1,6 +1,7 @@
 server:
   tomcat:
     max-threads: 8
+  port: 9090
 management:
     contextPath: /management
     add-application-context-header: false

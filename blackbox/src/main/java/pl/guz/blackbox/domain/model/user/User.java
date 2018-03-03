@@ -1,4 +1,4 @@
-package pl.guz.blackbox.domain.model;
+package pl.guz.blackbox.domain.model.user;
 
 import lombok.Value;
 
