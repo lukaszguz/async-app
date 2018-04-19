@@ -1,4 +1,4 @@
-package pl.allegro.demo.domain.infrastructure;
+package pl.allegro.demo.domain.infrastructure.app;
 
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;

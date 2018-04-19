@@ -1,4 +1,4 @@
-package pl.allegro.demo.domain.infrastructure;
+package pl.allegro.demo.domain.infrastructure.web;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerOpenException;
 import lombok.extern.slf4j.Slf4j;

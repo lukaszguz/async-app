@@ -1,4 +1,4 @@
-package pl.allegro.demo.domain.infrastructure;
+package pl.allegro.demo.domain.infrastructure.app;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

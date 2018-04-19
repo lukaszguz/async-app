@@ -15,3 +15,6 @@ endpoints:
 
 git-hub_endpoints:
   search-repo-by-owner: https://api.github.com/repos/{owner}/{repo}
+
+blackbox:
+  get-user-url: http://localhost:9090/users/{uuid}

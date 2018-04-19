@@ -1,4 +1,4 @@
-package pl.allegro.demo.domain.infrastructure;
+package pl.allegro.demo.domain.infrastructure.web;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.httpasyncclient.InstrumentedNHttpClientBuilder;
