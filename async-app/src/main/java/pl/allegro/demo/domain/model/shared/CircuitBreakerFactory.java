@@ -27,11 +27,10 @@ public class CircuitBreakerFactory {
     public CircuitBreaker defaultCircuitBreakerOf(String circuitBreakerName) {
         return circuitBreaker(circuitBreakerName, () -> CircuitBreakerConfig.custom()
                                                                             .waitDurationInOpenState(Duration.ofSeconds(10))
-                                                                            .ringBufferSizeInHalfOpenState(3)
-                                                                            .ringBufferSizeInClosedState(5)
+                                                                            .ringBufferSizeInHalfOpenState(10)
+                                                                            .ringBufferSizeInClosedState(100)
                                                                             .failureRateThreshold(50)
                                                                             .recordFailure(throwable -> Match(throwable).of(
-                                                                                    Case($(Predicates.instanceOf(ApplicationException.class)), false),
                                                                                     Case($(Predicates.instanceOf(ApplicationException.class)), false),
                                                                                     Case($(HttpPredicates.is4xxStatus()), false),
                                                                                     Case($(), true)))

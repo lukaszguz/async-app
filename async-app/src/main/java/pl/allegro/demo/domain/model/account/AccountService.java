@@ -44,8 +44,8 @@ public class AccountService {
                                              LocalDateTime.now()
                                                           .plusDays(2),
                                              user))
-                     .onErrorResumeNext(this::wrapException)
                      .lift(CircuitBreakerOperator.of(availability.circuitBreaker()))
+                     .onErrorResumeNext(this::wrapException)
                      .subscribeOn(availability.scheduler());
     }
 

@@ -13,12 +13,12 @@ class SometimesFailureUserRepositorySpec extends Specification {
             .build()
     private SometimesFailureUserRepository repository = new SometimesFailureUserRepository(availability)
 
-    def "should 8 times return user and 2 times return failure"() {
+    def "should 98 times return user and 2 times return failure"() {
         given:
         UUID userId = UUID.randomUUID()
 
         expect:
-        1.upto(8, {
+        1.upto(98, {
             assert repository.load(userId.toString())
                     .blockingGet()
         })
@@ -49,7 +49,7 @@ class SometimesFailureUserRepositorySpec extends Specification {
 
         expect:
         1.upto(2, {
-            1.upto(8, {
+            1.upto(98, {
                 assert repository.load(userId.toString())
                         .blockingGet()
                 positiveCounter.incrementAndGet()
@@ -62,7 +62,7 @@ class SometimesFailureUserRepositorySpec extends Specification {
                     failureCounter.incrementAndGet()
                 }
             })
-            assert positiveCounter.get() == 8
+            assert positiveCounter.get() == 98
             assert failureCounter.get() == 2
 
             positiveCounter.set(0)

@@ -27,11 +27,11 @@ class SometimesFailureUserRepository implements UserRepository {
     }
 
     private Maybe<User> choose(Integer count, String userId) {
-        if (count > 10) {
+        if (count > 100) {
             counter.set(1);
             count = 1;
         }
-        if (count == 9 || count == 10) {
+        if (count == 99 || count == 100) {
             return Maybe.error(new ApplicationException(ApiResponseStatus.INTERNAL_SERVER_ERROR));
         }
         return Maybe.fromCallable(() -> user(userId));
