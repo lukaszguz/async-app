@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "threshold-exception",
+      "type": "java.lang.Integer",
+      "description": "Value between 0 and 100."
+  }
+] }

@@ -46,7 +46,7 @@ class AccountConfiguration {
                                                                                                                      .waitDurationInOpenState(Duration.ofSeconds(1))
                                                                                                                      .ringBufferSizeInHalfOpenState(5)
                                                                                                                      .ringBufferSizeInClosedState(100)
-                                                                                                                     .failureRateThreshold(20)
+                                                                                                                     .failureRateThreshold(30)
                                                                                                                      .recordFailure(throwable -> Match(throwable).of(
                                                                                                                              Case($(Predicates.instanceOf(
                                                                                                                                      ApplicationException.class)), false),
@@ -75,7 +75,8 @@ class AccountConfiguration {
 
     private Retry retryPolicy() {
         return Retry.of("account-service", RetryConfig.custom()
-                                                      .waitDuration(Duration.ofMillis(300))
+                                                      .waitDuration(Duration.ofMillis(100))
+                                                      .maxAttempts(5)
                                                       .retryOnException(Predicates.noneOf(HttpPredicates.is4xxStatus()))
                                                       .build());
     }

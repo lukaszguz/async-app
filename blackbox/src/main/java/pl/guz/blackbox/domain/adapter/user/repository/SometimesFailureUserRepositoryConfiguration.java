@@ -4,15 +4,18 @@ import com.codahale.metrics.Gauge;
 import com.codahale.metrics.MetricRegistry;
 import io.reactivex.schedulers.Schedulers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 import pl.guz.blackbox.domain.model.shared.Availability;
 
+import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 @Configuration
 class SometimesFailureUserRepositoryConfiguration {
@@ -20,12 +23,24 @@ class SometimesFailureUserRepositoryConfiguration {
     @Autowired
     MetricRegistry registry;
 
+    @Value("${threshold-exception}")
+    Integer thresholdException;
+
     @Bean
     SometimesFailureUserRepository userRepository() {
+
         return new SometimesFailureUserRepository(Availability.builder()
                                                               .scheduler(Schedulers.from(userReposThreadPool()))
-                                                              .build()
+                                                              .build(),
+                                                  thresholdException,
+                                                  randNumberBetween1_100()
         );
+    }
+
+    private Supplier<Integer> randNumberBetween1_100() {
+        final Random random = new Random();
+        final int max = 100;
+        return () -> random.nextInt(max - 1) + 1;
     }
 
     private Executor userReposThreadPool() {
