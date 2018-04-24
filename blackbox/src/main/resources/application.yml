@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: blackbox
 server:
   tomcat:
     max-threads: 8
@@ -9,6 +12,16 @@ management:
         db.enabled: false
         diskspace.enabled: false
     security.enabled: false
+    metrics:
+      export:
+        graphite:
+          host: localhost
+          enabled: true
+          port: 2003
+          rate-units: milliseconds
+          duration-units: milliseconds
+          step: 1s
+          protocol: plaintext
 
 endpoints:
     health.mapping.DOWN: OK

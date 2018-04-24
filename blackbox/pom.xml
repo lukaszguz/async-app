@@ -27,6 +27,8 @@
         <rxjava.version>2.1.8</rxjava.version>
         <resilience4j.version>0.11.0</resilience4j.version>
         <cglib.version>3.2.5</cglib.version>
+        <micrometer.version>1.0.3</micrometer.version>
+
     </properties>
 
     <dependencies>
@@ -67,12 +69,14 @@
         </dependency>
 
         <dependency>
-            <groupId>io.dropwizard.metrics</groupId>
-            <artifactId>metrics-core</artifactId>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-spring-legacy</artifactId>
+            <version>${micrometer.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.dropwizard.metrics</groupId>
-            <artifactId>metrics-httpasyncclient</artifactId>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-graphite</artifactId>
+            <version>${micrometer.version}</version>
         </dependency>
 
         <dependency>
