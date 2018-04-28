@@ -1,7 +1,6 @@
 package pl.allegro.demo.domain.infrastructure.web;
 
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.httpasyncclient.InstrumentedNHttpClientBuilder;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.client.AsyncClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsAsyncClientHttpRequestFactory;
 import org.springframework.web.client.AsyncRestTemplate;
+import pl.allegro.demo.domain.infrastructure.web.httpclient.InstrumentedNHttpClientBuilder;
 
 @Configuration
 class WebConfiguration {
@@ -28,7 +28,7 @@ class WebConfiguration {
     @Autowired
     HttpSpanInjector spanInjector;
     @Autowired
-    MetricRegistry metricRegistry;
+    MeterRegistry meterRegistry;
 
     @Bean
     public AsyncRestTemplate traceAsyncRestTemplate(TraceAsyncClientHttpRequestFactoryWrapper customHttpRequestFactoryWrapper) {
@@ -56,7 +56,7 @@ class WebConfiguration {
                                                        .setSoReuseAddress(true)
                                                        .setSoTimeout(500)
                                                        .build();
-        return new InstrumentedNHttpClientBuilder(metricRegistry)
+        return new InstrumentedNHttpClientBuilder(meterRegistry)
                 .setDefaultIOReactorConfig(reactorConfig)
                 .setMaxConnPerRoute(100)
                 .setMaxConnTotal(200)

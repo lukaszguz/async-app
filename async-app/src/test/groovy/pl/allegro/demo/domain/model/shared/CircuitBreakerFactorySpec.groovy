@@ -11,7 +11,7 @@ import java.time.Duration
 class CircuitBreakerFactorySpec extends Specification {
 
     private MetricRegistry metricRegistry = Mock(MetricRegistry)
-    private CircuitBreakerFactory circuitBreakerFactory = new CircuitBreakerFactory(metricRegistry)
+    private CircuitBreakerFactory circuitBreakerFactory = new CircuitBreakerFactory()
 
     def "should create new default circuit breaker and add metrics to it"() {
         given:
