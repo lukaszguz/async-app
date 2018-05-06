@@ -1,7 +1,6 @@
 package pl.guz.blackbox.domain.model.shared;
 
 import io.micrometer.core.instrument.Metrics;
-import io.micrometer.core.instrument.Tags;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 
 import java.util.concurrent.Executor;
@@ -21,9 +20,9 @@ public class MonitoringThreadPool {
                                                                     keepAliveTime, TimeUnit.MILLISECONDS,
                                                                     workQueue,
                                                                     new CustomizableThreadFactory(threadPoolName + "-"));
-        Metrics.gauge("", Tags.of(threadPoolName, "queue-utilization"), workQueue, queue -> queue.size() / (double) (queue.size() + queue.remainingCapacity()));
-        Metrics.gauge("", Tags.of(threadPoolName, "queue-size"), workQueue, LinkedBlockingQueue::size);
-        Metrics.gauge("", Tags.of(threadPoolName, "activeThreads"), executorService, ThreadPoolExecutor::getActiveCount);
+        Metrics.gauge(threadPoolName + ".queue-utilization", workQueue, queue -> queue.size() / (double) (queue.size() + queue.remainingCapacity()));
+        Metrics.gauge(threadPoolName + ".queue-size", workQueue, LinkedBlockingQueue::size);
+        Metrics.gauge(threadPoolName + ".activeThreads", executorService, ThreadPoolExecutor::getActiveCount);
         return executorService;
     }
 }

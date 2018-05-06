@@ -35,7 +35,7 @@ public class AccountService {
                              .toSingle(traceAsyncRestTemplate.getForEntity(blackboxConfig.getGetUserUrl(),
                                                                            User.class,
                                                                            command.accountId())))
-                     .compose(RetryTransformer.of(availability.retryPolicy()))
+//                     .compose(RetryTransformer.of(availability.retryPolicy()))
                      .observeOn(availability.scheduler())
                      .map(HttpEntity::getBody)
                      .doOnSuccess(body -> log.info("Got response for: {}", getAccountCommand))
@@ -44,7 +44,7 @@ public class AccountService {
                                              LocalDateTime.now()
                                                           .plusDays(2),
                                              user))
-                     .lift(CircuitBreakerOperator.of(availability.circuitBreaker()))
+//                     .lift(CircuitBreakerOperator.of(availability.circuitBreaker()))
                      .onErrorResumeNext(this::wrapException)
                      .subscribeOn(availability.scheduler());
     }
