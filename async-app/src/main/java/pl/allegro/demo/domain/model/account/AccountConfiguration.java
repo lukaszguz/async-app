@@ -22,6 +22,8 @@ import java.time.Duration;
 import java.util.concurrent.Executor;
 
 import static io.vavr.API.*;
+import static io.vavr.Predicates.instanceOf;
+import static pl.allegro.demo.domain.model.shared.HttpPredicates.*;
 
 @Configuration
 @RequiredArgsConstructor
@@ -46,15 +48,15 @@ class AccountConfiguration {
         return MonitoringThreadPool.threadPool("account-service-thread-pool",
                                                200,
                                                2,
-                                               2,
+                                               4,
                                                100);
     }
 
     private Retry retryPolicy() {
         return Retry.of("account-service", RetryConfig.custom()
-                                                      .waitDuration(Duration.ofMillis(100))
-                                                      .maxAttempts(5)
-                                                      .retryOnException(Predicates.noneOf(HttpPredicates.is4xxStatus()))
+                                                      .waitDuration(Duration.ofMillis(200))
+                                                      .maxAttempts(2)
+                                                      .retryOnException(Predicates.noneOf(is4xxStatus()))
                                                       .build());
     }
 
@@ -66,9 +68,8 @@ class AccountConfiguration {
                                                                               .ringBufferSizeInClosedState(100)
                                                                               .failureRateThreshold(30)
                                                                               .recordFailure(throwable -> Match(throwable).of(
-                                                                                      Case($(Predicates.instanceOf(
-                                                                                              ApplicationException.class)), false),
-                                                                                      Case($(HttpPredicates.is4xxStatus()), false),
+                                                                                      Case($(instanceOf(ApplicationException.class)), false),
+                                                                                      Case($(is4xxStatus()), false),
                                                                                       Case($(), true)))
                                                                               .build()
                                                    );

@@ -14,7 +14,7 @@ import pl.allegro.demo.domain.model.shared.ApiResponseStatus;
 
 import java.util.UUID;
 
-@RestControllerAdvice(basePackages = "pl.allegro.demo.domain.model")
+@RestControllerAdvice(basePackages = "pl.allegro.demo.domain.adapter.account.rest")
 @Slf4j
 class BaseControllerAdvice {
 

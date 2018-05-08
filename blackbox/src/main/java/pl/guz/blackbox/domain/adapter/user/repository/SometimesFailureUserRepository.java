@@ -29,7 +29,7 @@ class SometimesFailureUserRepository implements UserRepository {
 
     public Maybe<User> load(String uuid) {
         return Maybe.defer(() -> exceptionOrValue(uuid))
-                    .subscribeOn(availability.scheduler());
+                .subscribeOn(availability.scheduler());
     }
 
     private Maybe<User> exceptionOrValue(String userId) {
