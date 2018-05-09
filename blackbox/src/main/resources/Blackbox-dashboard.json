@@ -48,6 +48,237 @@
   "rows": [
     {
       "collapse": false,
+      "height": 281,
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_LOCAL_GRAPHITE}",
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 14,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 5,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "refId": "A",
+              "target": "blackbox.tomcat.threads.busy.*.http-nio-9090"
+            }
+          ],
+          "thresholds": "",
+          "title": "Busy",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_LOCAL_GRAPHITE}",
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 16,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "refId": "A",
+              "target": "blackbox.tomcat.threads.current.name.http-nio-9090"
+            }
+          ],
+          "thresholds": "",
+          "title": "Current",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_LOCAL_GRAPHITE}",
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 15,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 4,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "refId": "A",
+              "target": "blackbox.tomcat.threads.config.max.name.*"
+            }
+          ],
+          "thresholds": "",
+          "title": "Max",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Tomcat",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
       "height": 279,
       "panels": [
         {
@@ -106,6 +337,7 @@
           "tableColumn": "",
           "targets": [
             {
+              "hide": false,
               "refId": "A",
               "target": "blackbox.http.server.requests.*.*.method.GET.status.200.uri._users__uuid_.count",
               "textEditor": true
@@ -180,9 +412,9 @@
           "tableColumn": "",
           "targets": [
             {
-              "refId": "A",
-              "target": "blackbox.http.server.requests.*.*.*.GET.status.500.uri._users__uuid_.count",
-              "textEditor": true
+              "refId": "B",
+              "target": "blackbox.tomcat.global.error.name.http-nio-9090.count",
+              "textEditor": false
             }
           ],
           "thresholds": "",
@@ -329,7 +561,14 @@
           "targets": [
             {
               "refId": "A",
-              "target": "asPercent(blackbox.http.server.requests.*.*.*.GET.status.500.uri._users__uuid_.count, sumSeries(group(blackbox.http.server.requests.*.*.method.GET.status.200.uri._users__uuid_.count, blackbox.http.server.requests.*.*.*.GET.status.500.uri._users__uuid_.count)))",
+              "target": "asPercent(#B, sumSeries(group(blackbox.http.server.requests.*.*.method.GET.status.200.uri._users__uuid_.count, #B)))",
+              "targetFull": "asPercent(blackbox.tomcat.global.error.name.http-nio-9090.count, sumSeries(group(blackbox.http.server.requests.*.*.method.GET.status.200.uri._users__uuid_.count, #B)))",
+              "textEditor": true
+            },
+            {
+              "hide": true,
+              "refId": "B",
+              "target": "blackbox.tomcat.global.error.name.http-nio-9090.count",
               "textEditor": true
             }
           ],
@@ -379,101 +618,21 @@
           "targets": [
             {
               "refId": "B",
-              "target": "alias(blackbox.http.server.requests.*.*.method.GET.status.200.uri._users__uuid_.p50, '200 p50')"
+              "target": "alias(blackbox.http.server.requests.*.*.method.GET.status.*.uri._users__uuid_.p50, 'p50')"
             },
             {
               "refId": "A",
-              "target": "alias(blackbox.http.server.requests.*.*.method.GET.status.200.uri._users__uuid_.p95, '200 p95')"
+              "target": "alias(blackbox.http.server.requests.*.*.method.GET.status.*.uri._users__uuid_.p95, 'p95')"
             },
             {
               "refId": "C",
-              "target": "alias(blackbox.http.server.requests.*.*.method.GET.status.200.uri._users__uuid_.p99, '200 p99')"
+              "target": "alias(blackbox.http.server.requests.*.*.method.GET.status.*.uri._users__uuid_.p99, 'p99')"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "200",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "dtdurationms",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_LOCAL_GRAPHITE}",
-          "fill": 1,
-          "id": 10,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "span": 12,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "refId": "B",
-              "target": "alias(blackbox.http.server.requests.exception.*.method.GET.status.500.uri._users__uuid_.p50, '500 p50')"
-            },
-            {
-              "refId": "A",
-              "target": "alias(blackbox.http.server.requests.exception.*.method.GET.status.500.uri._users__uuid_.p95, '500 p95')"
-            },
-            {
-              "refId": "C",
-              "target": "alias(blackbox.http.server.requests.exception.*.method.GET.status.500.uri._users__uuid_.p99, '500 p99')"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "500",
+          "title": "Response time",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -515,7 +674,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 199,
       "panels": [
         {
@@ -759,7 +918,7 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-3m",
     "to": "now"
   },
   "timepicker": {
@@ -789,5 +948,5 @@
   },
   "timezone": "",
   "title": "Blackbox",
-  "version": 19
+  "version": 8
 }

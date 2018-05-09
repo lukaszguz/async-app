@@ -408,7 +408,7 @@
               "to": "null"
             }
           ],
-          "span": 4,
+          "span": 2,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -482,7 +482,7 @@
               "to": "null"
             }
           ],
-          "span": 4,
+          "span": 2,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -499,6 +499,80 @@
           ],
           "thresholds": "",
           "title": "Client Response 500",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_LOCAL_GRAPHITE}",
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 15,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 2,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "refId": "A",
+              "target": "async-app.http.client.requests.*.localhost.method.GET.status.CLIENT_ERROR.uri._users__uuid_.count",
+              "textEditor": true
+            }
+          ],
+          "thresholds": "",
+          "title": "Client Error",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -556,7 +630,7 @@
               "to": "null"
             }
           ],
-          "span": 4,
+          "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -567,12 +641,116 @@
           "targets": [
             {
               "refId": "A",
-              "target": "asPercent(async-app.http.client.requests.*.localhost.method.GET.status.500.uri._users__uuid_.count, sumSeries(group(async-app.http.client.requests.*.localhost.method.GET.status.200.uri._users__uuid_.count, async-app.http.client.requests.*.localhost.method.GET.status.500.uri._users__uuid_.count)))",
+              "target": "asPercent(#B, sumSeries(group(#C, #B)))",
+              "targetFull": "asPercent(async-app.http.client.requests.*.localhost.method.GET.status.500.uri._users__uuid_.count, sumSeries(group(async-app.http.client.requests.*.localhost.method.GET.status.200.uri._users__uuid_.count, #B)))",
               "textEditor": true
+            },
+            {
+              "hide": true,
+              "refId": "B",
+              "target": "async-app.http.client.requests.*.localhost.method.GET.status.500.uri._users__uuid_.count",
+              "textEditor": false
+            },
+            {
+              "hide": true,
+              "refId": "C",
+              "target": "async-app.http.client.requests.*.localhost.method.GET.status.200.uri._users__uuid_.count",
+              "textEditor": false
             }
           ],
           "thresholds": "",
           "title": "Client Threshold",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_LOCAL_GRAPHITE}",
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 16,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "refId": "A",
+              "target": "asPercent(#D, sumSeries(group(#B, #C, #D)))",
+              "targetFull": "asPercent(async-app.http.client.requests.clientName.localhost.method.GET.status.CLIENT_ERROR.uri._users__uuid_.count, sumSeries(group(async-app.http.client.requests.clientName.localhost.method.GET.status.200.uri._users__uuid_.count, async-app.http.client.requests.clientName.localhost.method.GET.status.500.uri._users__uuid_.count, #D)))",
+              "textEditor": true
+            },
+            {
+              "hide": true,
+              "refId": "B",
+              "target": "async-app.http.client.requests.clientName.localhost.method.GET.status.200.uri._users__uuid_.count"
+            },
+            {
+              "hide": true,
+              "refId": "C",
+              "target": "async-app.http.client.requests.clientName.localhost.method.GET.status.500.uri._users__uuid_.count"
+            },
+            {
+              "hide": true,
+              "refId": "D",
+              "target": "async-app.http.client.requests.clientName.localhost.method.GET.status.CLIENT_ERROR.uri._users__uuid_.count",
+              "textEditor": false
+            }
+          ],
+          "thresholds": "",
+          "title": "Client Error  Threshold",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -726,13 +904,25 @@
           "tableColumn": "",
           "targets": [
             {
+              "refId": "C",
+              "target": "sumSeries(group(#A, #B))",
+              "targetFull": "sumSeries(group(async-app.http.server.requests.exception.*.method.GET.status.500.uri._accounts__accountId_.count, async-app.http.server.requests.exception.*.method.GET.status.502.uri._accounts__accountId_.count))"
+            },
+            {
+              "hide": true,
               "refId": "A",
-              "target": "async-app.http.server.requests.*.*.method.GET.status.500.uri._accounts__accountId_.count",
-              "textEditor": true
+              "target": "async-app.http.server.requests.exception.*.method.GET.status.500.uri._accounts__accountId_.count",
+              "textEditor": false
+            },
+            {
+              "hide": true,
+              "refId": "B",
+              "target": "async-app.http.server.requests.exception.*.method.GET.status.502.uri._accounts__accountId_.count",
+              "textEditor": false
             }
           ],
           "thresholds": "",
-          "title": "Server Response 500",
+          "title": "Server Response 5xx",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -801,7 +991,7 @@
           "targets": [
             {
               "refId": "A",
-              "target": "asPercent(async-app.http.server.requests.*.*.method.GET.status.500.uri._accounts__accountId_.count, sumSeries(group(async-app.http.server.requests.*.*.method.GET.status.200.uri._accounts__accountId_.count, async-app.http.server.requests.*.*.method.GET.status.500.uri._accounts__accountId_.count)))",
+              "target": "asPercent(sumSeries(async-app.http.server.requests.*.*.method.GET.status.500.uri._accounts__accountId_.count), sumSeries(group(async-app.http.server.requests.*.*.method.GET.status.200.uri._accounts__accountId_.count, async-app.http.server.requests.*.*.method.GET.status.500.uri._accounts__accountId_.count)))",
               "textEditor": true
             }
           ],
@@ -1167,7 +1357,7 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-3m",
     "to": "now"
   },
   "timepicker": {
@@ -1197,5 +1387,5 @@
   },
   "timezone": "",
   "title": "Async-app",
-  "version": 12
+  "version": 9
 }
