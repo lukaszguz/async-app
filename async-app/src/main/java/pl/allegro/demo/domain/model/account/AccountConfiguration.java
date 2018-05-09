@@ -15,7 +15,6 @@ import pl.allegro.demo.domain.model.BlackboxConfig;
 import pl.allegro.demo.domain.model.exception.ApplicationException;
 import pl.allegro.demo.domain.model.shared.Availability;
 import pl.allegro.demo.domain.model.shared.CircuitBreakerFactory;
-import pl.allegro.demo.domain.model.shared.HttpPredicates;
 import pl.allegro.demo.domain.model.shared.MonitoringThreadPool;
 
 import java.time.Duration;
@@ -23,7 +22,7 @@ import java.util.concurrent.Executor;
 
 import static io.vavr.API.*;
 import static io.vavr.Predicates.instanceOf;
-import static pl.allegro.demo.domain.model.shared.HttpPredicates.*;
+import static pl.allegro.demo.domain.model.shared.HttpPredicates.is4xxStatus;
 
 @Configuration
 @RequiredArgsConstructor
@@ -35,43 +34,44 @@ class AccountConfiguration {
     @Bean
     AccountService accountService() {
         return new AccountService(blackboxConfig,
-                                  traceAsyncRestTemplate,
-                                  Availability.builder()
-                                              .scheduler(Schedulers.from(accountServiceThreadPool()))
-                                              .circuitBreaker(circuitBreaker())
-                                              .retryPolicy(retryPolicy())
-                                              .build()
+                traceAsyncRestTemplate,
+                Availability.builder()
+                        .retryPolicy(retryPolicy())
+                        .circuitBreaker(circuitBreaker())
+                        .scheduler(Schedulers.from(accountServiceThreadPool()))
+                        .build()
+        );
+    }
+
+    private Retry retryPolicy() {
+        return Retry.of("account-service", RetryConfig.custom()
+                .waitDuration(Duration.ofMillis(50))
+                .maxAttempts(3)
+                .retryOnException(Predicates.noneOf(is4xxStatus()))
+                .build());
+    }
+
+    private CircuitBreaker circuitBreaker() {
+        return CircuitBreakerFactory.circuitBreaker("account-service",
+                () -> CircuitBreakerConfig.custom()
+                        .waitDurationInOpenState(Duration.ofSeconds(1))
+                        .ringBufferSizeInHalfOpenState(5)
+                        .ringBufferSizeInClosedState(100)
+                        .failureRateThreshold(30)
+                        .recordFailure(throwable -> Match(throwable).of(
+                                Case($(instanceOf(ApplicationException.class)), false),
+                                Case($(is4xxStatus()), false),
+                                Case($(), true)))
+                        .build()
         );
     }
 
     private Executor accountServiceThreadPool() {
         return MonitoringThreadPool.threadPool("account-service-thread-pool",
-                                               200,
-                                               2,
-                                               4,
-                                               100);
+                200,
+                2,
+                4,
+                100);
     }
 
-    private Retry retryPolicy() {
-        return Retry.of("account-service", RetryConfig.custom()
-                                                      .waitDuration(Duration.ofMillis(200))
-                                                      .maxAttempts(2)
-                                                      .retryOnException(Predicates.noneOf(is4xxStatus()))
-                                                      .build());
-    }
-
-    private CircuitBreaker circuitBreaker() {
-        return CircuitBreakerFactory.circuitBreaker("account-service",
-                                                    () -> CircuitBreakerConfig.custom()
-                                                                              .waitDurationInOpenState(Duration.ofSeconds(1))
-                                                                              .ringBufferSizeInHalfOpenState(5)
-                                                                              .ringBufferSizeInClosedState(100)
-                                                                              .failureRateThreshold(30)
-                                                                              .recordFailure(throwable -> Match(throwable).of(
-                                                                                      Case($(instanceOf(ApplicationException.class)), false),
-                                                                                      Case($(is4xxStatus()), false),
-                                                                                      Case($(), true)))
-                                                                              .build()
-                                                   );
-    }
 }

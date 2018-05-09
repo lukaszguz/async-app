@@ -18,14 +18,19 @@ class SometimesFailureUserRepositoryConfiguration {
     Integer thresholdException;
 
     @Bean
-    SometimesFailureUserRepository userRepository() {
+    SometimesFailureUserRepository sometimesFailureUserRepository() {
 
         return new SometimesFailureUserRepository(Availability.builder()
-                                                              .scheduler(Schedulers.from(userReposThreadPool()))
-                                                              .build(),
-                                                  thresholdException,
-                                                  randNumberBetween1_100()
+                .scheduler(Schedulers.from(userReposThreadPool()))
+                .build(),
+                thresholdException,
+                randNumberBetween1_100()
         );
+    }
+
+    @Bean
+    SimpleUserRepository simpleUserRepository() {
+        return new SimpleUserRepository();
     }
 
     private Supplier<Integer> randNumberBetween1_100() {

@@ -17,7 +17,6 @@ import pl.allegro.demo.domain.model.shared.Availability;
 import pl.allegro.demo.domain.model.shared.ListenableFutureAdapter;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
 
 import static io.vavr.API.*;
 
@@ -29,24 +28,22 @@ public class AccountService {
     private final Availability availability;
 
     public Single<Account> findAccount(GetAccountCommand getAccountCommand) {
+        return call(getAccountCommand)
+                .lift(CircuitBreakerOperator.of(availability.circuitBreaker()))
+                .compose(RetryTransformer.of(availability.retryPolicy()))
+                .onErrorResumeNext(this::wrapException)
+                .subscribeOn(availability.scheduler());
+    }
+
+    private Single<Account> call(GetAccountCommand getAccountCommand) {
         return Single.fromCallable(() -> getAccountCommand)
                 .doOnSuccess(command -> log.info("Searching account: {}", command))
-                .flatMap(command -> ListenableFutureAdapter
-                        .toSingle(traceAsyncRestTemplate.getForEntity(blackboxConfig.getGetUserUrl(),
-                                User.class,
-                                command.accountId())))
+                .flatMap(command -> ListenableFutureAdapter.toSingle(traceAsyncRestTemplate.getForEntity(blackboxConfig.getGetUserUrl(), User.class, command.accountId())))
                 .observeOn(availability.scheduler())
                 .map(HttpEntity::getBody)
                 .doOnSuccess(body -> log.info("Got response for: {}", getAccountCommand))
                 .doOnError(e -> log.error("Cannot fetch account", e))
-                .map(user -> Account.of(getAccountCommand.accountId(),
-                        LocalDateTime.now()
-                                .plusDays(2),
-                        user))
-                .compose(RetryTransformer.of(availability.retryPolicy()))
-                .lift(CircuitBreakerOperator.of(availability.circuitBreaker()))
-                .onErrorResumeNext(this::wrapException)
-                .subscribeOn(availability.scheduler());
+                .map(user -> Account.of(getAccountCommand.accountId(), LocalDateTime.now().plusDays(2), user));
     }
 
     private Single<Account> wrapException(Throwable throwable) {

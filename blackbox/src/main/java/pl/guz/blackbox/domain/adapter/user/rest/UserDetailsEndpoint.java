@@ -17,13 +17,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 class UserDetailsEndpoint {
 
-    private final UserRepository userRepository;
+    private final UserRepository sometimesFailureUserRepository;
+    private final UserRepository simpleUserRepository;
 
     @GetMapping("/async/users/{uuid}")
     DeferredResult<User> asyncGetUserRepositories(@PathVariable("uuid") String uuid) {
         log.info("#GET_USER_DETAILS: {}", uuid);
         DeferredResult<User> result = new DeferredResult<>();
-        userRepository.load(uuid)
+        sometimesFailureUserRepository.load(uuid)
                 .subscribe(success -> {
                     log.info("#GET_USER_DETAILS_SUCCESS");
                     result.setResult(success);
@@ -38,7 +39,7 @@ class UserDetailsEndpoint {
     @SneakyThrows
     User getUserRepositories(@PathVariable("uuid") String uuid) {
         TimeUnit.MILLISECONDS.sleep(100);
-        return userRepository.load(uuid)
+        return simpleUserRepository.load(uuid)
                 .blockingGet();
     }
 }
