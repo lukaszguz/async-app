@@ -45,19 +45,20 @@ class AccountConfiguration {
 
     private Retry retryPolicy() {
         return Retry.of("account-service", RetryConfig.custom()
-                .waitDuration(Duration.ofMillis(50))
-                .maxAttempts(3)
+                .waitDuration(Duration.ofMillis(200))
+                .maxAttempts(5)
                 .retryOnException(Predicates.noneOf(is4xxStatus()))
                 .build());
     }
 
     private CircuitBreaker circuitBreaker() {
+
         return CircuitBreakerFactory.circuitBreaker("account-service",
                 () -> CircuitBreakerConfig.custom()
-                        .waitDurationInOpenState(Duration.ofSeconds(1))
+                        .waitDurationInOpenState(Duration.ofSeconds(2))
                         .ringBufferSizeInHalfOpenState(5)
                         .ringBufferSizeInClosedState(100)
-                        .failureRateThreshold(30)
+                        .failureRateThreshold(50)
                         .recordFailure(throwable -> Match(throwable).of(
                                 Case($(instanceOf(ApplicationException.class)), false),
                                 Case($(is4xxStatus()), false),
@@ -71,7 +72,7 @@ class AccountConfiguration {
                 200,
                 2,
                 4,
-                100);
+                500);
     }
 
 }

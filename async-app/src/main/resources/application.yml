@@ -4,6 +4,7 @@ spring:
 server:
   tomcat:
     max-threads: 8
+    accept-count: 1000
 management:
     contextPath: /management
     add-application-context-header: false

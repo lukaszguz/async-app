@@ -3,7 +3,8 @@ spring:
     name: blackbox
 server:
   tomcat:
-    max-threads: 4
+    max-threads: 2
+    accept-count: 100
   port: 9090
 management:
     contextPath: /management
