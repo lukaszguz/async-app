@@ -33,7 +33,8 @@ class AccountConfiguration {
 
     @Bean
     AccountService accountService() {
-        return new AccountService(blackboxConfig,
+        return new AccountService(
+                blackboxConfig,
                 traceAsyncRestTemplate,
                 Availability.builder()
                         .retryPolicy(retryPolicy())
@@ -52,13 +53,14 @@ class AccountConfiguration {
     }
 
     private CircuitBreaker circuitBreaker() {
-
-        return CircuitBreakerFactory.circuitBreaker("account-service",
+        return CircuitBreakerFactory.
+                circuitBreaker("account-service",
                 () -> CircuitBreakerConfig.custom()
-                        .waitDurationInOpenState(Duration.ofSeconds(2))
-                        .ringBufferSizeInHalfOpenState(5)
                         .ringBufferSizeInClosedState(100)
                         .failureRateThreshold(50)
+                        .waitDurationInOpenState(Duration.ofSeconds(60))
+                        .ringBufferSizeInHalfOpenState(10)
+
                         .recordFailure(throwable -> Match(throwable).of(
                                 Case($(instanceOf(ApplicationException.class)), false),
                                 Case($(is4xxStatus()), false),

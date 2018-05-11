@@ -29,8 +29,6 @@ public class AccountService {
 
     public Single<Account> findAccount(GetAccountCommand getAccountCommand) {
         return call(getAccountCommand)
-                .lift(CircuitBreakerOperator.of(availability.circuitBreaker()))
-                .compose(RetryTransformer.of(availability.retryPolicy()))
                 .onErrorResumeNext(this::wrapException)
                 .subscribeOn(availability.scheduler());
     }
@@ -38,7 +36,12 @@ public class AccountService {
     private Single<Account> call(GetAccountCommand getAccountCommand) {
         return Single.fromCallable(() -> getAccountCommand)
                 .doOnSuccess(command -> log.info("Searching account: {}", command))
-                .flatMap(command -> ListenableFutureAdapter.toSingle(traceAsyncRestTemplate.getForEntity(blackboxConfig.getGetUserUrl(), User.class, command.accountId())))
+                .flatMap(command ->
+                        ListenableFutureAdapter.
+                                toSingle(traceAsyncRestTemplate.
+                                        getForEntity(blackboxConfig.getGetUserUrl(), User.class, command.accountId())
+                                )
+                )
                 .observeOn(availability.scheduler())
                 .map(HttpEntity::getBody)
                 .doOnSuccess(body -> log.info("Got response for: {}", getAccountCommand))
