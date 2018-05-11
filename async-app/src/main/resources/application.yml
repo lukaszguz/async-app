@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: async-app
+server:
+  tomcat:
+    max-threads: 8
+    accept-count: 1000
+management:
+    contextPath: /management
+    add-application-context-header: false
+    health:
+        db.enabled: false
+        diskspace.enabled: false
+    security.enabled: false
+    metrics:
+          export:
+            graphite:
+              host: localhost
+              enabled: true
+              port: 2003
+              rate-units: milliseconds
+              duration-units: milliseconds
+              step: 1s
+              protocol: plaintext
+
+endpoints:
+    health.mapping.DOWN: OK
+    health.mapping.OUT_OF_SERVICE : OK
+
+git-hub_endpoints:
+  search-repo-by-owner: https://api.github.com/repos/{owner}/{repo}
+
+blackbox:
+  get-user-url: http://localhost:9090/users/{uuid}

@@ -1,0 +1,3 @@
+# Auto Configuration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+pl.allegro.demo.domain.infrastructure.app.RxJava2AutoConfiguration

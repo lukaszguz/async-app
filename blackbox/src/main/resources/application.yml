@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: blackbox
+server:
+  tomcat:
+    max-threads: 2
+    accept-count: 100
+  port: 9090
+management:
+    contextPath: /management
+    add-application-context-header: false
+    health:
+        db.enabled: false
+        diskspace.enabled: false
+    security.enabled: false
+    metrics:
+      export:
+        graphite:
+          host: localhost
+          enabled: true
+          port: 2003
+          rate-units: milliseconds
+          duration-units: milliseconds
+          step: 1s
+          protocol: plaintext
+
+endpoints:
+    health.mapping.DOWN: OK
+    health.mapping.OUT_OF_SERVICE : OK
+threshold-exception: 20

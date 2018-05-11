@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "git-hub_endpoints.search-repo-by-owner",
+      "type": "java.lang.String",
+      "description": "Search url address to github."
+    }
+  ]
+}
