@@ -29,6 +29,8 @@ public class AccountService {
 
     public Single<Account> findAccount(GetAccountCommand getAccountCommand) {
         return call(getAccountCommand)
+                .lift(CircuitBreakerOperator.of(availability.circuitBreaker()))
+                .compose(RetryTransformer.of(availability.retryPolicy()))
                 .onErrorResumeNext(this::wrapException)
                 .subscribeOn(availability.scheduler());
     }

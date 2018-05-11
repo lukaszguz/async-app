@@ -58,8 +58,8 @@ class AccountConfiguration {
                 () -> CircuitBreakerConfig.custom()
                         .ringBufferSizeInClosedState(100)
                         .failureRateThreshold(50)
-                        .waitDurationInOpenState(Duration.ofSeconds(60))
-                        .ringBufferSizeInHalfOpenState(10)
+                        .waitDurationInOpenState(Duration.ofSeconds(2))
+                        .ringBufferSizeInHalfOpenState(5)
 
                         .recordFailure(throwable -> Match(throwable).of(
                                 Case($(instanceOf(ApplicationException.class)), false),
